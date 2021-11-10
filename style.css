@@ -1,0 +1,194 @@
+.full-height {
+	height: 100vh;
+}
+
+.display-section {
+	width: 100%;
+	height: 100%;
+	/* max-height: 1000px; */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.search-box {
+	width: 70%;
+	border: 1px solid rgb(138, 136, 136);
+	border-radius: 0.5em;
+	padding: 0.25em;
+}
+
+.info-section {
+	width: 100%;
+	height: 100%;
+	/* max-height: 1000px; */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.nav-link {
+	color: black;
+	border-bottom: 2px solid black;
+	text-decoration: none;
+	padding: 0.5rem 0;
+}
+
+.box1 {
+	background-color: white;
+	border-radius: 1em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	font-size: 1.3rem;
+}
+
+.box2 {
+	background-color: white;
+	border-radius: 1em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.h1-font {
+	font-size: 4rem;
+}
+
+.h2-font {
+	font-size: 3rem;
+}
+
+.h3-font {
+	font-size: 2rem;
+}
+
+.h4-font {
+	font-size: 1.5rem;
+}
+
+.carousel {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.carousel__main {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+
+.carousel__track-container {
+	width: 400px;
+	height: 200px;
+	position: relative;
+	overflow: hidden;
+	border-radius: 20px;
+}
+
+.carousel__button {
+	margin: 0.75rem;
+	z-index: 2;
+}
+
+.carousel__track {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	height: 100%;
+	width: 100%;
+	transition: transform 250ms ease-in;
+}
+
+.carousel__slide {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 20px;
+}
+
+.carousel__image {
+	height: 100%;
+	width: 100%;
+	border-radius: 20px;
+	object-fit: cover;
+}
+
+.carousel__nav {
+	display: flex;
+	justify-content: center;
+}
+
+.carousel__indicator {
+	border: 0;
+	border-radius: 50%;
+	width: 10px;
+	height: 10px;
+	margin: 0.5rem;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.current-slide {
+	background-color: rgba(0, 0, 0, 0.75);
+}
+
+.is-hidden {
+	display: none;
+}
+
+.background-color {
+	background-color: #f8f9f9;
+}
+
+.lighter-black {
+	opacity: 0.3;
+}
+
+input {
+	border: none;
+	flex-grow: 2;
+	width: 90%;
+	font-size: 1.25rem;
+}
+
+input:focus {
+	outline: none;
+}
+
+button {
+	all: initial;
+}
+
+#five-days {
+	display: none;
+}
+
+@media only screen and (max-width: 600px) {
+	html,
+	body {
+		font-size: 10px;
+	}
+
+	.display-section {
+		height: 100vh;
+	}
+
+	.center {
+		margin: 1.5rem auto;
+	}
+
+	.width80 {
+		width: 80%;
+	}
+}

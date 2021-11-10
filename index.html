@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hello World map</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" type="text/css" href="./style.css" />
+		<link
+			rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+			integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<div class="container-fluid full-height">
+			<div class="row h-100">
+				<div class="col-xs-12 col-md-4">
+					<div class="display-section">
+						<div class="search-box my-md-3">
+							<button><i class="fas fa-search"></i></button>
+							<input me-autofocus type="text" placeholder=" Search for a place..." />
+						</div>
+						<div class="flex my-md-3">
+							<i class="fas fa-map-marker-alt fa-3x"></i>
+							<div id="city" class="h2-font ms-3"></div>
+						</div>
+						<div id="temp" class="h1-font my-md-3"></div>
+						<div class="flex my-md-3">
+							<img id="weather-icon" />
+							<div id="weather" class="h3-font ms-3"></div>
+						</div>
+						<div id="current-date" class="h4-font my-md-3"></div>
+						<div id="current-time" class="h4-font my-md-3"></div>
+						<!-- carousel effect -->
+						<div class="carousel">
+							<div class="carousel__main">
+								<button class="carousel__button carousel__button--left is-hidden">
+									<i class="fas fa-chevron-left fa-lg"></i>
+								</button>
+								<div class="carousel__track-container">
+									<ul class="carousel__track"></ul>
+								</div>
+								<button class="carousel__button carousel__button--right">
+									<i class="fas fa-chevron-right fa-lg"></i>
+								</button>
+							</div>
+							<div class="carousel__nav"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-8 background-color">
+					<div class="info-section">
+						<nav class="nav">
+							<button class="nav-link h4-font mb-md-3 mx-md-5 center" id="today-btn">
+								Today
+							</button>
+							<button
+								class="nav-link h4-font mb-md-3 lighter-black center"
+								id="fiveDays-btn"
+							>
+								5-days
+							</button>
+						</nav>
+						<!-- By default show the 'today' section -->
+						<!-- 'today' section -->
+						<div class="row justify-content-center" id="today">
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-today" class="my-md-3"></div>
+								<img id="forecast-img-today" />
+								<div id="temp-min-max-today" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-today" class="my-md-3"></div>
+								<img id="forecast-img-today" />
+								<div id="temp-min-max-today" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-today" class="my-md-3"></div>
+								<img id="forecast-img-today" />
+								<div id="temp-min-max-today" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-today" class="my-md-3"></div>
+								<img id="forecast-img-today" />
+								<div id="temp-min-max-today" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-today" class="my-md-3">:00</div>
+								<img id="forecast-img-today" />
+								<div id="temp-min-max-today" class="my-md-3"></div>
+							</div>
+						</div>
+						<!-- '5days' section -->
+						<div class="row justify-content-center" id="five-days">
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-five-days" class="my-md-3"></div>
+								<img id="forecast-img-five-days" />
+								<div id="temp-min-max-five-days" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-five-days" class="my-md-3"></div>
+								<img id="forecast-img-five-days" />
+								<div id="temp-min-max-five-days" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-five-days" class="my-md-3"></div>
+								<img id="forecast-img-five-days" />
+								<div id="temp-min-max-five-days" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-five-days" class="my-md-3"></div>
+								<img id="forecast-img-five-days" />
+								<div id="temp-min-max-five-days" class="my-md-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-2 m-md-2 my-2 box1 width80">
+								<div id="time-five-days" class="my-md-3">:00</div>
+								<img id="forecast-img-five-days" />
+								<div id="temp-min-max-five-days" class="my-md-3"></div>
+							</div>
+						</div>
+						<div class="h4-font ms-md-5 center">Today's Highlights</div>
+						<div class="row justify-content-center">
+							<div class="col-xs-12 col-md-3 m-md-3 my-2 box2 width80">
+								<div class="h4-font my-3">humidity</div>
+								<div id="humidity" class="h2-font mb-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-3 m-md-3 my-2 box2 width80">
+								<div class="h4-font my-3">Wind speed</div>
+								<div id="wind" class="h2-font mb-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-3 m-md-3 my-2 box2 width80">
+								<div class="h4-font my-3">Sunrise & Sunset</div>
+								<div id="sunrise" class="h3-font"></div>
+								<div id="sunset" class="h3-font mb-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-3 m-md-3 my-2 box2 width80">
+								<div class="h4-font my-3">Feels like</div>
+								<div id="feels" class="h2-font mb-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-3 m-md-3 my-2 box2 width80">
+								<div class="h4-font my-3">Visibility</div>
+								<div id="visibility" class="h2-font mb-3"></div>
+							</div>
+							<div class="col-xs-12 col-md-3 m-md-3 my-2 box2 width80">
+								<div class="h4-font my-3">Pressure</div>
+								<div id="pressure" class="h2-font mb-3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6s2MRWfm8k5e7irCMF_UmHiNKUx76wrI&libraries=places&language=en"></script>
+		<script type="module" src="index.js"></script>
+	</body>
+</html>
