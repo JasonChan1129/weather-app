@@ -230,7 +230,7 @@ function displayData(weatherData, forecastData, fiveDaysData, cityName) {
 		// Fill the info on display section
 		city.innerHTML = cityName;
 		const iconCode = weatherData.weather[0].icon;
-		icon.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+		icon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 		temp.innerHTML = `${parseInt(weatherData.main.temp)}°C`;
 		const currentDate = convertUnixToTime(weatherData.dt, {
 			month: 'long',
@@ -275,7 +275,7 @@ function displayData(weatherData, forecastData, fiveDaysData, cityName) {
 
 		const forecastImgList = document.querySelectorAll('#forecast-img-today');
 		forecastImgList.forEach((img, index) => {
-			img.src = `http://openweathermap.org/img/wn/${forecastData.list[index].weather[0].icon}@2x.png`;
+			img.src = `https://openweathermap.org/img/wn/${forecastData.list[index].weather[0].icon}@2x.png`;
 		});
 
 		const tempMinMaxList = document.querySelectorAll('#temp-min-max-today');
@@ -298,7 +298,7 @@ function displayData(weatherData, forecastData, fiveDaysData, cityName) {
 
 		const forecastImgListFiveDays = document.querySelectorAll('#forecast-img-five-days');
 		forecastImgListFiveDays.forEach((img, index) => {
-			img.src = `http://openweathermap.org/img/wn/${fiveDaysData.daily[index].weather[0].icon}@2x.png`;
+			img.src = `https://openweathermap.org/img/wn/${fiveDaysData.daily[index].weather[0].icon}@2x.png`;
 		});
 
 		const tempMinMaxListFiveDays = document.querySelectorAll('#temp-min-max-five-days');
