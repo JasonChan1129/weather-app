@@ -1,5 +1,3 @@
-// api key for openweather api
-const weatherKey = 'ce3ac8daca99b7efa499a2fe189ff68e';
 // Create a google map search box element
 const input = document.querySelector('input');
 let button = document.querySelector('button');
@@ -8,9 +6,7 @@ const searchBox = new google.maps.places.SearchBox(input);
 let geocoder;
 geocoder = new google.maps.Geocoder();
 // By default, get and display the weather info of local place
-fetchWeather('Taiwan', { lat: 23.69781, lng: 120.960515 }, weatherKey);
-
-// toggle color (today/5days)
+requestData('Taiwan', 23.69781, 120.960515);
 
 // for carousel effect
 const track = document.querySelector('.carousel__track');
@@ -170,35 +166,27 @@ function getInfo() {
 			latLng.lat = results[0].geometry.location.lat();
 			latLng.lng = results[0].geometry.location.lng();
 			const cityName = results[0].address_components[0].long_name;
-			fetchWeather(cityName, latLng, weatherKey);
+			requestData(cityName, latLng.lat, latLng.lng);
 		} else {
 			alert('Geocode was not successful for the following reason: ' + status);
 		}
 	});
 }
 
-// Use async await to fetch weather info
-async function fetchWeather(cityName, latLng, weatherKey) {
+// request data from server
+async function requestData(city, lat, lng) {
 	try {
-		const lat = latLng.lat;
-		const lng = latLng.lng;
-		const [weatherResponse, forecastResponse, fiveDaysResponse] = await Promise.all([
+		const [currentWeather, threeHrsForecast, fiveDaysForecast] = await Promise.all([
 			// Today's weather and 5 days forecast
-			fetch(
-				`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${weatherKey}`
-			),
-			fetch(
-				`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${weatherKey}`
-			),
-			fetch(
-				`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=current,minutely,hourly,alerts&units=metric&appid=${weatherKey}`
-			),
+			fetch(`https://jasons-weather-app.herokuapp.com/weather/current/${city}`),
+			fetch(`https://jasons-weather-app.herokuapp.com/weather/forecast/3hours/${city}`),
+			fetch(`https://jasons-weather-app.herokuapp.com/weather/forecast/5days/${lat}/${lng}`),
 		]);
 
-		const weather = await weatherResponse.json();
-		const forecast = await forecastResponse.json();
-		const fiveDays = await fiveDaysResponse.json();
-		displayData(weather, forecast, fiveDays, cityName);
+		const weather = await currentWeather.json();
+		const forecast = await threeHrsForecast.json();
+		const fiveDays = await fiveDaysForecast.json();
+		displayData(weather, forecast, fiveDays, city);
 	} catch {
 		err => console.log(err);
 	}
