@@ -71,19 +71,19 @@ async function requestData(city, lat, lng) {
 
 // display the given data
 function displayData(weatherData, forecastData, fiveDaysData, cityName) {
-	const city = document.getElementById('city');
-	const icon = document.getElementById('weather-icon');
-	const temp = document.getElementById('temp');
-	const date = document.getElementById('current-date');
-	const time = document.getElementById('current-time');
-	const weather = document.getElementById('weather');
-	const humidity = document.getElementById('humidity');
-	const wind = document.getElementById('wind');
-	const sunrise = document.getElementById('sunrise');
-	const sunset = document.getElementById('sunset');
-	const pressure = document.getElementById('pressure');
-	const feels = document.getElementById('feels');
-	const visibiity = document.getElementById('visibility');
+	const city = document.querySelector('#city');
+	const icon = document.querySelector('#weather-icon');
+	const temp = document.querySelector('#temp');
+	const date = document.querySelector('#current-date');
+	const time = document.querySelector('#current-time');
+	const weather = document.querySelector('#weather');
+	const humidity = document.querySelector('#humidity');
+	const wind = document.querySelector('#wind');
+	const sunrise = document.querySelector('#sunrise');
+	const sunset = document.querySelector('#sunset');
+	const pressure = document.querySelector('#pressure');
+	const feels = document.querySelector('#feels');
+	const visibiity = document.querySelector('#visibility');
 	const infoSection = document.querySelector('.info-section');
 	const todayDiv = document.querySelector('#today');
 	const fiveDaysDiv = document.querySelector('#five-days');
