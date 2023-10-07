@@ -1,3 +1,5 @@
+const BASE_URL = 'https://weather-app-server-63a8e5342c48.herokuapp.com/';
+
 // Create a google map search box element
 const input = document.querySelector('input');
 const searchBox = new google.maps.places.SearchBox(input);
@@ -55,9 +57,9 @@ async function requestData(city, lat, lng) {
 	try {
 		const [currentWeather, threeHrsForecast, fiveDaysForecast] = await Promise.all([
 			// Today's weather and 5 days forecast
-			fetch(`https://jasons-weather-app.herokuapp.com/weather/current/${city}`),
-			fetch(`https://jasons-weather-app.herokuapp.com/weather/forecast/3hours/${city}`),
-			fetch(`https://jasons-weather-app.herokuapp.com/weather/forecast/5days/${lat}/${lng}`),
+			fetch(`${BASE_URL}weather/current/${city}`),
+			fetch(`${BASE_URL}weather/forecast/3hours/${city}`),
+			fetch(`${BASE_URL}weather/forecast/5days/${lat}/${lng}`),
 		]);
 
 		const weather = await currentWeather.json();
