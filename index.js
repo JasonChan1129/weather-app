@@ -1,59 +1,17 @@
 const BASE_URL = 'https://weather-app-server-63a8e5342c48.herokuapp.com/';
 
 // Create a google map search box element
-const input = document.querySelector('input');
-const searchBox = new google.maps.places.SearchBox(input);
-// Using the google Geocoding services
-let geocoder;
-geocoder = new google.maps.Geocoder();
-// By default, get and display the weather info of local place
-requestData('Taiwan', 23.69781, 120.960515);
-
-searchBox.addListener('places_changed', () => {
-	const places = searchBox.getPlaces();
-	if (places.length == 0) {
-		return;
-	}
-});
-
-// When user press the enter key at the searchbox / click the search button, call the getInfo function
-const searchButton = document.querySelector('.search-box button');
-searchButton.addEventListener('click', () => {
-	{
-		if (searchBox.getPlaces()) {
-			removeOldCarousel();
-			getInfo();
-		} else {
-			return;
-		}
-	}
-});
-
-input.addEventListener('keydown', e => {
-	if (e.keyCode == 13 && searchBox.getPlaces()) {
-		removeOldCarousel();
-		getInfo();
-	}
-});
-
-// Get the information of the searched place
-function getInfo() {
-	const address = input.value;
-	geocoder.geocode({ address: address }, (results, status) => {
-		if (status == 'OK') {
-			const latLng = {};
-			latLng.lat = results[0].geometry.location.lat();
-			latLng.lng = results[0].geometry.location.lng();
-			const cityName = results[0].address_components[0].long_name;
-			requestData(cityName, latLng.lat, latLng.lng);
-		} else {
-			alert('Geocode was not successful for the following reason: ' + status);
-		}
-	});
+function createSearchBox() {
+	const input = document.querySelector('input');
+	const searchBox = new google.maps.places.SearchBox(input);
+	return searchBox;
 }
 
-// request data from server
-async function requestData(city, lat, lng) {
+function newGeocoder() {
+	return new google.maps.Geocoder();
+}
+
+async function fetchAndDisplayWeatherData(city, lat, lng) {
 	try {
 		const [currentWeather, threeHrsForecast, fiveDaysForecast] = await Promise.all([
 			// Today's weather and 5 days forecast
@@ -91,6 +49,22 @@ function displayData(weatherData, forecastData, fiveDaysData, cityName) {
 	const fiveDaysDiv = document.querySelector('#five-days');
 	const todayBtn = document.querySelector('#today-btn');
 	const fiveDatsbtn = document.querySelector('#fiveDays-btn');
+
+	function convertUnixToTime(unixTime, format) {
+		// In Taiwan timezone
+		const unixTimestamp = unixTime;
+		// Change to UTC timezone (8hr * 60mins * 60sec)
+		const utcTime = unixTimestamp - 28800;
+		// Change to local timezone
+		const localTime = utcTime + weatherData.timezone;
+		// Change to milliseconds
+		const milliseconds = localTime * 1000;
+		// Change to date format
+		const dateObject = new Date(milliseconds);
+		const time = dateObject.toLocaleString('en-GB', format);
+
+		return time;
+	}
 
 	// data received successfully
 	if (weatherData.message !== 'city not found') {
@@ -182,22 +156,56 @@ function displayData(weatherData, forecastData, fiveDaysData, cityName) {
 	}
 	// clear input value
 	input.value = '';
+}
 
-	function convertUnixToTime(unixTime, format) {
-		// In Taiwan timezone
-		const unixTimestamp = unixTime;
-		// Change to UTC timezone (8hr * 60mins * 60sec)
-		const utcTime = unixTimestamp - 28800;
-		// Change to local timezone
-		const localTime = utcTime + weatherData.timezone;
-		// Change to milliseconds
-		const milliseconds = localTime * 1000;
-		// Change to date format
-		const dateObject = new Date(milliseconds);
-		const time = dateObject.toLocaleString('en-GB', format);
+// Main function to initialize the application
+function initWeatherApp() {
+	const searchBox = createSearchBox();
+	const geocoder = newGeocoder();
 
-		return time;
-	}
+	// Default weather info for Taiwan
+	fetchAndDisplayWeatherData('Taiwan', 23.69781, 120.960515);
+
+	searchBox.addListener('places_changed', () => {
+		const places = searchBox.getPlaces();
+		if (places.length === 0) {
+			return;
+		}
+	});
+
+	const searchButton = document.querySelector('.search-box button');
+	searchButton.addEventListener('click', () => {
+		if (searchBox.getPlaces()) {
+			removeOldCarousel();
+			getInfo(searchBox, geocoder);
+		} else {
+			return;
+		}
+	});
+
+	const input = document.querySelector('input');
+	input.addEventListener('keydown', e => {
+		if (e.keyCode === 13 && searchBox.getPlaces()) {
+			removeOldCarousel();
+			getInfo(searchBox, geocoder);
+		}
+	});
+}
+
+// Get the information of the searched place
+function getInfo() {
+	const address = input.value;
+	geocoder.geocode({ address: address }, (results, status) => {
+		if (status == 'OK') {
+			const latLng = {};
+			latLng.lat = results[0].geometry.location.lat();
+			latLng.lng = results[0].geometry.location.lng();
+			const cityName = results[0].address_components[0].long_name;
+			fetchAndDisplayWeatherData(cityName, latLng.lat, latLng.lng);
+		} else {
+			alert('Geocode was not successful for the following reason: ' + status);
+		}
+	});
 }
 
 // Get the photos of selected city from google map api
@@ -232,31 +240,31 @@ function setCityPhotoUrl() {
 			arrangeSlides();
 		});
 	}
-	// create carousel slides and assign images
-	function createCarouselSlides(urlList, results) {
-		urlList.forEach((item, index) => {
-			track.style.transform = `translateX(0px)`;
-			const li = document.createElement('li');
-			const a = document.createElement('a');
-			const img = document.createElement('img');
-			const button = document.createElement('button');
-			li.classList.add('carousel__slide');
-			a.classList.add('carousel__link');
-			a.target = 'blank';
-			a.href = results.url;
-			img.classList.add('carousel__image', 'mb-4');
-			img.src = item;
-			button.classList.add('carousel__indicator');
-			a.appendChild(img);
-			li.appendChild(a);
-			track.appendChild(li);
-			dotsNav.appendChild(button);
-			if (index === 0) {
-				li.classList.add('current-slide');
-				button.classList.add('current-slide');
-			}
-		});
-	}
+}
+// create carousel slides and assign images
+function createCarouselSlides(urlList, results) {
+	urlList.forEach((item, index) => {
+		track.style.transform = `translateX(0px)`;
+		const li = document.createElement('li');
+		const a = document.createElement('a');
+		const img = document.createElement('img');
+		const button = document.createElement('button');
+		li.classList.add('carousel__slide');
+		a.classList.add('carousel__link');
+		a.target = 'blank';
+		a.href = results.url;
+		img.classList.add('carousel__image', 'mb-4');
+		img.src = item;
+		button.classList.add('carousel__indicator');
+		a.appendChild(img);
+		li.appendChild(a);
+		track.appendChild(li);
+		dotsNav.appendChild(button);
+		if (index === 0) {
+			li.classList.add('current-slide');
+			button.classList.add('current-slide');
+		}
+	});
 }
 
 // FOR CAROUSELL EFFECT
@@ -359,3 +367,5 @@ function removeOldCarousel() {
 	slides.forEach(remove);
 	dots.forEach(remove);
 }
+
+initWeatherApp();
